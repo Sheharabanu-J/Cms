@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
+const User = require('../models/User');
 
 const connectDB = async () => {
   try {
@@ -15,29 +16,28 @@ const connectDB = async () => {
         mongoUri = mongoServer.getUri();
         conn = await mongoose.connect(mongoUri);
         console.log('Started mongodb-memory-server successfully.');
-        
-        // Seed admin user for in-memory database
-        const User = require('../models/User');
-        const adminExists = await User.findOne({ email: 'admin@renewcred.com' });
-        if (!adminExists) {
-          await User.create({
-            name: 'Admin User',
-            email: 'admin@renewcred.com',
-            password: 'password123',
-            role: 'admin'
-          });
-          console.log('Admin user seeded in memory database.');
-        }
       } else {
         throw err;
       }
     }
     
     console.log(`MongoDB Connected: ${conn.connection.host}`);
+    
+    // Always ensure an admin user exists, even in production on first launch
+    const adminExists = await User.findOne({ email: 'admin@renewcred.com' });
+    if (!adminExists) {
+      await User.create({
+        name: 'Admin User',
+        email: 'admin@renewcred.com',
+        password: 'password123',
+        role: 'admin'
+      });
+      console.log('Admin user seeded in database.');
+    }
+    
   } catch (error) {
     console.error(`Error connecting to MongoDB: ${error.message}`);
     console.warn('Backend is running without a database connection.');
-    // process.exit(1);
   }
 };
 
