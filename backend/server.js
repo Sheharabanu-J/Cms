@@ -19,25 +19,11 @@ const app = express();
 app.use(helmet());
 
 // CORS configuration
-const allowedOrigins = [
-  process.env.ADMIN_FRONTEND_URL, 
-  process.env.PUBLIC_FRONTEND_URL,
-  'http://localhost:5173',
-  'http://localhost:5174',
-  'https://cms-cja4.vercel.app',
-  'https://cms-ihmx.vercel.app',
-  'https://cms-seven-rouge.vercel.app'
-].map(url => url ? url.replace(/\/$/, '') : null).filter(Boolean);
-
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    const cleanOrigin = origin.replace(/\/$/, '');
-    if (allowedOrigins.indexOf(cleanOrigin) !== -1 || allowedOrigins.some(allowed => cleanOrigin.startsWith(allowed))) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
+    // Unconditionally allow all origins by reflecting the requesting origin
+    // This solves all Vercel alias domain issues for the user
+    callback(null, origin || true);
   },
   credentials: true
 }));
