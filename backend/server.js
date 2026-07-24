@@ -23,7 +23,10 @@ const allowedOrigins = [
   process.env.ADMIN_FRONTEND_URL, 
   process.env.PUBLIC_FRONTEND_URL,
   'http://localhost:5173',
-  'http://localhost:5174'
+  'http://localhost:5174',
+  'https://cms-cja4.vercel.app',
+  'https://cms-ihmx.vercel.app',
+  'https://cms-seven-rouge.vercel.app'
 ].map(url => url ? url.replace(/\/$/, '') : null).filter(Boolean);
 
 app.use(cors({
