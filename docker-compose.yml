@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: renewcred-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - renewcred-network
+
+  backend:
+    build:
+      context: ./backend
+    container_name: renewcred-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - MONGO_URI=mongodb://mongodb:27017/renewcred
+      - JWT_SECRET=super_secret_jwt_key_production
+      - ADMIN_FRONTEND_URL=http://localhost:5173
+      - PUBLIC_FRONTEND_URL=http://localhost:5174
+    depends_on:
+      - mongodb
+    networks:
+      - renewcred-network
+
+  admin-frontend:
+    build:
+      context: ./admin-frontend
+    container_name: renewcred-admin
+    ports:
+      - "5173:80"
+    networks:
+      - renewcred-network
+
+  public-frontend:
+    build:
+      context: ./public-frontend
+    container_name: renewcred-public
+    ports:
+      - "5174:80"
+    networks:
+      - renewcred-network
+
+networks:
+  renewcred-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:

@@ -1,0 +1,87 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  
+  --color-glass: rgba(255, 255, 255, 0.1);
+  --color-glass-dark: rgba(0, 0, 0, 0.2);
+}
+
+@layer base {
+  :root {
+    --background: #fdfdfd;
+    --foreground: #022c22;
+    --card: #ffffff;
+    --card-foreground: #022c22;
+    --primary: #16a34a;
+    --primary-foreground: #ffffff;
+    --muted: #f0fdf4;
+    --muted-foreground: #166534;
+    --border: #dcfce7;
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+  }
+  .dark {
+    --background: #060907; /* Royal Black */
+    --foreground: #f0fdf4;
+    --card: #0c120e;
+    --card-foreground: #f0fdf4;
+    --primary: #22c55e;
+    --primary-foreground: #022c22;
+    --muted: #141f17;
+    --muted-foreground: #86efac;
+    --border: #141f17;
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+  }
+  
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Outfit', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image: radial-gradient(circle at top right, rgba(99, 102, 241, 0.05), transparent 50%),
+                      radial-gradient(circle at bottom left, rgba(67, 56, 202, 0.05), transparent 50%);
+    background-attachment: fixed;
+  }
+
+  .dark body {
+    background-image: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent 40%),
+                      radial-gradient(circle at bottom left, rgba(67, 56, 202, 0.1), transparent 40%);
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .dark .glass {
+    background: rgba(24, 24, 27, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+}

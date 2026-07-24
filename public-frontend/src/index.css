@@ -1,0 +1,23 @@
+@import "tailwindcss";
+@import 'katex/dist/katex.min.css';
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+@theme {
+  --color-primary: #16a34a;
+  --color-primary-foreground: #ffffff;
+  
+  --color-background: #060907; /* Royal Black */
+  --color-foreground: #f0fdf4;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: 'Outfit', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image: radial-gradient(circle at top right, rgba(79, 70, 229, 0.05), transparent 40%);
+    background-attachment: fixed;
+  }
+}

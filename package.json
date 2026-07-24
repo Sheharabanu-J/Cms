@@ -1,0 +1,15 @@
+{
+  "name": "renewcred-cms",
+  "version": "1.0.0",
+  "description": "RenewCred CMS Platform Monorepo",
+  "scripts": {
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:admin": "npm run dev --prefix admin-frontend",
+    "dev:public": "npm run dev --prefix public-frontend",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:admin\" \"npm run dev:public\"",
+    "install:all": "npm install && npm install --prefix backend && npm install --prefix admin-frontend && npm install --prefix public-frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
