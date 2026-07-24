@@ -30,6 +30,9 @@ export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValu
     await apiClient.post('/logout');
     return null;
   } catch (error) {
+    // If the backend rejects the logout (e.g. token expired/stale), force clear local storage anyway!
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     return rejectWithValue(error.response?.data?.error || error.response?.data?.message || 'Logout failed');
   }
 });
@@ -67,6 +70,14 @@ const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        // Force logout on the frontend even if the backend API fails
+        state.user = null;
+        state.token = null;
+        state.isAuthenticated = false;
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
