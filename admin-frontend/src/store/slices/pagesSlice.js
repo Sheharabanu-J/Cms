@@ -22,7 +22,7 @@ export const fetchPages = createAsyncThunk('pages/fetchPages', async (_, { rejec
     const response = await apiClient.get('/');
     return response.data.data;
   } catch (error) {
-    return rejectWithValue(error.response?.data?.message || 'Failed to fetch pages');
+    return rejectWithValue(error.response?.data?.error || error.response?.data?.message || 'Failed to fetch pages');
   }
 });
 
@@ -31,7 +31,7 @@ export const fetchPageById = createAsyncThunk('pages/fetchPageById', async (id, 
     const response = await apiClient.get(`/${id}`);
     return response.data.data;
   } catch (error) {
-    return rejectWithValue(error.response?.data?.message || 'Failed to fetch page');
+    return rejectWithValue(error.response?.data?.error || error.response?.data?.message || 'Failed to fetch page');
   }
 });
 
@@ -40,7 +40,7 @@ export const createPage = createAsyncThunk('pages/createPage', async (pageData, 
     const response = await apiClient.post('/', pageData);
     return response.data.data;
   } catch (error) {
-    return rejectWithValue(error.response?.data?.message || 'Failed to create page');
+    return rejectWithValue(error.response?.data?.error || error.response?.data?.message || 'Failed to create page');
   }
 });
 
@@ -49,7 +49,7 @@ export const updatePage = createAsyncThunk('pages/updatePage', async ({ id, data
     const response = await apiClient.put(`/${id}`, data);
     return response.data.data;
   } catch (error) {
-    return rejectWithValue(error.response?.data?.message || 'Failed to update page');
+    return rejectWithValue(error.response?.data?.error || error.response?.data?.message || 'Failed to update page');
   }
 });
 
@@ -58,7 +58,7 @@ export const deletePage = createAsyncThunk('pages/deletePage', async (id, { reje
     await apiClient.delete(`/${id}`);
     return id;
   } catch (error) {
-    return rejectWithValue(error.response?.data?.message || 'Failed to delete page');
+    return rejectWithValue(error.response?.data?.error || error.response?.data?.message || 'Failed to delete page');
   }
 });
 
